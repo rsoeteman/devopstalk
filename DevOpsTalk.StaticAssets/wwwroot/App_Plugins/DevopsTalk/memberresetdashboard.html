@@ -1,0 +1,33 @@
+﻿<div ng-controller="devOpsTalk.memberresetdashboardcontroller">
+    <form name="frm" no-validate no-dirty-check val-form-manager>
+        <uui-box>
+            Select one or more members to reset their passwords to <strong>test123456</strong> Don't use in production :-)
+            <button class="btn btn-primary" ng-disabled="disableResetButton()" ng-click="resetPasswords()" style="float:right">Reset password for selected members</button>
+        </uui-box>
+        <p>&nbsp;</p>
+        <uui-box>
+            <uui-table aria-label="Example table" aria-describedby="#some-element-id">
+                <uui-table-column style="width:40px"></uui-table-column>
+                <uui-table-column></uui-table-column>
+                <uui-table-column></uui-table-column>
+
+                <uui-table-head>
+                    <uui-table-head-cell>&nbsp;</uui-table-head-cell>
+                    <uui-table-head-cell>Member Name</uui-table-head-cell>
+                    <uui-table-head-cell>Member Email</uui-table-head-cell>
+                </uui-table-head>
+
+                <uui-table-row ng-repeat="member in members">
+                    <uui-table-cell><input type="checkbox" ng-model="member.ShouldReset" no-dirty-check /></uui-table-cell>
+                    <uui-table-cell>{{member.Name}}</uui-table-cell>
+                    <uui-table-cell>{{member.Email}}</uui-table-cell>
+                </uui-table-row>
+            </uui-table>
+        </uui-box>
+        <umb-editor-footer>
+            <umb-editor-footer-content-left>
+                <small>This is version <strong>{{getVersion()}}</strong> of the package.</small>
+            </umb-editor-footer-content-left>
+        </umb-editor-footer>
+    </form>
+</div>

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <InformationalVersion>0.0.7-Developermode</InformationalVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Content\Views\contentPage.cshtml" />
+    <None Remove="Content\Views\Partials\login.cshtml" />
+    <None Remove="Content\Views\Partials\loginstatus.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Views\contentPage.cshtml" />
+    <EmbeddedResource Include="Content\Views\Partials\login.cshtml" />
+    <EmbeddedResource Include="Content\Views\Partials\loginstatus.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="12.2.0" />
+  </ItemGroup>
+
+</Project>

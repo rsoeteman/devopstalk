@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>DevopsTalk.Web</id>
+    <version>0.0.8</version>
+    <title>DevOps talk demo package</title>
+    <authors>Richard Soeteman</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/rsoeteman/devopstalk/</projectUrl>
+    <description>Demo package to for the Umbraco Package DevOps talk.</description>
+    <copyright>Copyright Richard Soeteman</copyright>
+  </metadata>
+</package>

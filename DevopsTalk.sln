@@ -1,0 +1,63 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevopsTalk.Web", "DevopsTalk.Web\DevopsTalk.Web.csproj", "{C5543432-FE99-4B79-9588-52407A13E6EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevopsTalk.StaticAssets", "DevopsTalk.StaticAssets\DevopsTalk.StaticAssets.csproj", "{C199BE99-FE20-40BA-B080-7F62ECE6F9FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevopsTalk.Core", "DevopsTalk.Core\DevopsTalk.Core.csproj", "{672CC467-E648-45F4-B6AE-1BAE916B5F4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{3BC08C44-613E-402C-BCE3-9772CBC4396C}"
+	ProjectSection(SolutionItems) = preProject
+		Automation\azure-pipelines.yml = Automation\azure-pipelines.yml
+		CreateNugetTestEnvironment.txt = CreateNugetTestEnvironment.txt
+		CreateTestEnvironment.txt = CreateTestEnvironment.txt
+		Automation\NuGet\DevopsTalk.Web.nuspec = Automation\NuGet\DevopsTalk.Web.nuspec
+		Automation\GitVersion.yml = Automation\GitVersion.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevopsTalk.AddTestData", "DevopsTalk.AddTestData\DevopsTalk.AddTestData.csproj", "{B2611CC4-399B-4D1A-9274-9E45178867A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BA6DB92D-EB62-435B-953E-74FA3F0D65E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsTalk.UnitTests", "DevOpsTalk.UnitTests\DevOpsTalk.UnitTests.csproj", "{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5543432-FE99-4B79-9588-52407A13E6EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5543432-FE99-4B79-9588-52407A13E6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5543432-FE99-4B79-9588-52407A13E6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5543432-FE99-4B79-9588-52407A13E6EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C199BE99-FE20-40BA-B080-7F62ECE6F9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C199BE99-FE20-40BA-B080-7F62ECE6F9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C199BE99-FE20-40BA-B080-7F62ECE6F9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C199BE99-FE20-40BA-B080-7F62ECE6F9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672CC467-E648-45F4-B6AE-1BAE916B5F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672CC467-E648-45F4-B6AE-1BAE916B5F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672CC467-E648-45F4-B6AE-1BAE916B5F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672CC467-E648-45F4-B6AE-1BAE916B5F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2611CC4-399B-4D1A-9274-9E45178867A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2611CC4-399B-4D1A-9274-9E45178867A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2611CC4-399B-4D1A-9274-9E45178867A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2611CC4-399B-4D1A-9274-9E45178867A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2611CC4-399B-4D1A-9274-9E45178867A2} = {3BC08C44-613E-402C-BCE3-9772CBC4396C}
+		{26E0ECA1-CA70-47AE-BE5E-DB28D7448EDF} = {BA6DB92D-EB62-435B-953E-74FA3F0D65E2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29C5D7CF-4A69-4918-B34B-E0A1124474D8}
+	EndGlobalSection
+EndGlobal

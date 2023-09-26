@@ -1,0 +1,122 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- main
+- develop
+- refs/tags/v*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  isMain: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/main')]
+  isDevelop: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/develop')]
+  isVersionTag: $[startsWith(variables['Build.SourceBranch'], 'refs/tags/')]
+  shouldPreRelease: $[or(eq(variables.isDevelop,'True'),eq(variables.isMain,'True'),eq(variables['isVersionTag'],'true'))]
+  shouldReleaseToNuget: $[or(eq(variables['PushToNugetOrg'],'true'),eq(variables['isVersionTag'],'true'))]
+steps:
+- task: PowerShell@2
+  displayName: 'Initialize variables'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Is Main branch  $(isMain)"
+      Write-Host "Is develop branch $(isDevelop)"
+      Write-Host "Is release tag $(isVersionTag)"
+      Write-Host "Create Nuget package and push to Nuget project Artifacts $(shouldPreRelease)"
+      Write-Host "Push Nuget package to Nuget.org $(shouldReleaseToNuget)"
+- checkout: self
+  displayName: 'Checkout solution'
+  fetchDepth: 0
+- task: NuGetCommand@2
+  displayName: 'Restore Nuget packages for solution'
+  inputs:
+    restoreSolution: '$(solution)'
+- task: GitVersion@5
+  displayName: 'Calculate new version number'
+  inputs:
+    versionSpec: '5.10.x'
+    useConfigFile: true
+    configFilePath: '$(Build.Repository.LocalPath)\Automation\GitVersion.yml'
+- task: Assembly-Info-NetCore@3
+  displayName: 'Apply new version information to .csproject files'
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**/*.csproj'
+    InsertAttributes: true
+    FileEncoding: 'auto'
+    WriteBOM: false
+    VersionNumber: '$(GitVersion.MajorMinorPatch)'
+    FileVersionNumber: '$(GitVersion.AssemblySemFileVer)'
+    InformationalVersion: '$(GitVersion.NuGetVersion)'
+    PackageVersion: '$(GitVersion.NuGetVersion)'
+    LogLevel: 'verbose'
+    FailOnWarning: false
+    DisableTelemetry: false
+- task: VSBuild@1
+  displayName: 'Build solution'
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: "Unit Tests"
+  inputs:
+    command: 'test'
+    projects: '**/*.UnitTests.csproj'
+    testRunTitle: 'UnitTest'
+- task: CopyFiles@2
+  displayName: 'Copy staticwebassets files to nuget staticwebassets folder'
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)'
+    Contents: '**/wwwroot/**'
+    CleanTargetFolder: true 
+    flattenFolders: false
+    TargetFolder: '$(Build.Repository.LocalPath)\Automation\NuGet\staticwebassets\'
+- task: CopyFiles@2
+  displayName: 'Copy dll files to nuget lib folder'
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)'
+    Contents: '**/DevOpsTalk.Web/bin/**/DevopsTalk.*.dll'
+    CleanTargetFolder: true 
+    flattenFolders: true
+    TargetFolder: '$(Build.Repository.LocalPath)\Automation\NuGet\Lib\net7.0\'
+- task: NuGetCommand@2
+  displayName: 'Create Nuget Package'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.nuspec'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'GitVersion.NuGetVersion'
+- task: NuGetCommand@2
+  displayName: 'Push package to project feed'
+  condition: eq(variables['shouldPreRelease'], 'True')
+  inputs:
+    command: push
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'DevopsTalk/DevopsTalkNugetFeed'
+    allowPackageConflicts: true
+- task: NuGetCommand@2
+  displayName: 'Push package to public feed'
+  condition: eq(variables['shouldPreRelease'], 'True')
+  inputs:
+    command: push
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'Nuget Packages/SoetemanSoftware-Packages'
+    allowPackageConflicts: true
+- task: PowerShell@2
+  displayName: 'Push package to Nuget when in release mode or Push To Nuget is set'
+  condition: eq(variables['shouldReleaseToNuget'], 'True')
+  inputs:
+    targetType: 'inline'
+    script: |
+      dotnet nuget push $(Build.ArtifactStagingDirectory)/**/*.nupkg --api-key  $(NuGetApiKey) --source https://api.nuget.org/v3/index.json

@@ -1,0 +1,39 @@
+#Set Variables
+$sitename = "DevOpsTalk12TestSite"
+$productlocation = "F:\umbraco\Demo\DevOpsTalk\"
+$projects = "DevOpsTalk.Core\DevOpsTalk.Core.csproj", "DevOpsTalk.StaticAssets\DevOpsTalk.StaticAssets.csproj", "DevOpsTalk.Web\DevOpsTalk.Web.csproj", "DevOpsTalk.AddTestData\DevOpsTalk.AddTestData.csproj"
+
+foreach ($project  in $projects ) {
+        Write-Host "Adding $($projects)"
+}
+
+#Create new Umbraco Site
+dotnet new install Umbraco.Templates::12.0.0
+dotnet new umbraco -n $sitename  --connection-string "Server=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=true"
+
+cd $sitename 
+#Set info for installer
+Set-Item Env:\UMBRACO__CMS__GLOBAL__INSTALLMISSINGDATABASE true
+Set-Item Env:\UMBRACO__CMS__UNATTENDED__INSTALLUNATTENDED true
+Set-Item Env:\UMBRACO__CMS__UNATTENDED__UNATTENDEDUSERNAME "Soeteman Software Test User"
+Set-Item Env:\UMBRACO__CMS__UNATTENDED__UNATTENDEDUSEREMAIL "testuser@soetemansoftware.nl"
+Set-Item Env:\UMBRACO__CMS__UNATTENDED__UNATTENDEDUSERPASSWORD "test123456"
+
+#Create solution and add project and Starterkit
+dotnet new sln
+dotnet sln add $($sitename+".csproj")
+dotnet add package Umbraco.TheStarterKit --version 11.0.0
+
+#Add other projects to the solution
+foreach ($project  in $projects ) {
+	dotnet sln add $($productlocation + $($project))
+	dotnet add $($sitename+".csproj") reference $($productlocation +$($project))
+    }
+
+#build site including dependencies
+dotnet build
+
+#start site
+dotnet run
+
+
