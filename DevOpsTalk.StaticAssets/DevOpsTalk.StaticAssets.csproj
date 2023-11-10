@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     <InformationalVersion>0.0.7-Developermode</InformationalVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>

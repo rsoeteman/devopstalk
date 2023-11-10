@@ -1,13 +1,14 @@
-﻿using Umbraco.Cms.Infrastructure.Migrations;
+﻿using Umbraco.Cms.Core.Packaging;
 
 namespace DevOpsTalk.AddTestData.Installer
 {
-    public class DevOpsTalkTestDataMigrationPlan : MigrationPlan
+    public class DevOpsTalkTestDataMigrationPlan : PackageMigrationPlan
     {
-        public DevOpsTalkTestDataMigrationPlan(string name) : base(name)
-        {
-            From(string.Empty).To<DevOpsTalkTestDataMigrations>("DevOpsTalkTestDataModification");
+        public DevOpsTalkTestDataMigrationPlan() : base("DevOpsTestDataMigrations") {}
 
+        protected override void DefinePlan()
+        {
+            To<DevOpsTalkTestDataMigrations>("DevOpsTalkTestDataModification");
         }
     }
 }

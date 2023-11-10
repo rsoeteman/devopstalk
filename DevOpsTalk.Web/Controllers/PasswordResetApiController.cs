@@ -47,7 +47,7 @@ namespace DevOpsTalk.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error during password reset", ex);
+                _logger.LogError(ex,"Error during password reset");
                 return StatusCode(500);
             }
             return Ok();

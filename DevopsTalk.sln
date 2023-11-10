@@ -11,8 +11,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{3BC08C44-613E-402C-BCE3-9772CBC4396C}"
 	ProjectSection(SolutionItems) = preProject
 		Automation\azure-pipelines.yml = Automation\azure-pipelines.yml
-		CreateNugetTestEnvironment.txt = CreateNugetTestEnvironment.txt
-		CreateTestEnvironment.txt = CreateTestEnvironment.txt
+		Automation\CreateNugetTestEnvironment.txt = Automation\CreateNugetTestEnvironment.txt
+		Automation\CreateTestEnvironment.txt = Automation\CreateTestEnvironment.txt
 		Automation\NuGet\DevopsTalk.Web.nuspec = Automation\NuGet\DevopsTalk.Web.nuspec
 		Automation\GitVersion.yml = Automation\GitVersion.yml
 	EndProjectSection

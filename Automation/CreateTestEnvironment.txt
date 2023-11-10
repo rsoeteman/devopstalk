@@ -1,16 +1,10 @@
 #Set Variables
-$sitename = "DevOpsTalk12NugetTestSite"
-$productlocation = "F:\umbraco\Demo\DevOpsTalk\"
-$projects = "DevOpsTalk.AddTestData\DevOpsTalk.AddTestData.csproj"
-$package = "DevOpsTalk.Web"
-$packageversion = "12.0.0" 
-
-foreach ($project  in $projects ) {
-        Write-Host "Adding $($projects)"
-}
+$sitename = "24DaysTestSite"
+$productlocation = "F:\umbraco\Demo\DevopsTalkGitHub\"
+$projects = "DevOpsTalk.Core\DevOpsTalk.Core.csproj", "DevOpsTalk.StaticAssets\DevOpsTalk.StaticAssets.csproj", "DevOpsTalk.Web\DevOpsTalk.Web.csproj", "DevOpsTalk.AddTestData\DevOpsTalk.AddTestData.csproj"
 
 #Create new Umbraco Site
-dotnet new install Umbraco.Templates::12.0.0
+dotnet new install Umbraco.Templates::12.3.0
 dotnet new umbraco -n $sitename  --connection-string "Server=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=true"
 
 cd $sitename 
@@ -24,11 +18,7 @@ Set-Item Env:\UMBRACO__CMS__UNATTENDED__UNATTENDEDUSERPASSWORD "test123456"
 #Create solution and add project and Starterkit
 dotnet new sln
 dotnet sln add $($sitename+".csproj")
-dotnet add package Umbraco.TheStarterKit --version 11.0.0
-
-#add package source
-dotnet nuget add source https://pkgs.dev.azure.com/soetemansoftware/2e9ac862-2ac3-4cb6-bb2e-43d0c1a9d126/_packaging/SoetemanSoftware-Packages/nuget/v3/index.json -n soetemansoftware-packages
-dotnet add package $package --version $packageversion
+dotnet add package Umbraco.TheStarterKit --version 12.0.0
 
 #Add other projects to the solution
 foreach ($project  in $projects ) {
