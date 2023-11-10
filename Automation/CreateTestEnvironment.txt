@@ -21,10 +21,11 @@ dotnet sln add $($sitename+".csproj")
 dotnet add package Umbraco.TheStarterKit --version 12.0.0
 
 #Add other projects to the solution
-foreach ($project  in $projects ) {
+foreach ($project  in $projects ) 
+{
 	dotnet sln add $($productlocation + $($project))
 	dotnet add $($sitename+".csproj") reference $($productlocation +$($project))
-    }
+}
 
 #build site including dependencies
 dotnet build
