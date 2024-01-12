@@ -25,7 +25,7 @@ namespace DevOpsTalk.Web.Controllers
         [HttpGet]
         public IEnumerable<MemberResetModel> GetAllMembers()
         {
-            return _memberService.GetAllMembers().Select(m =>
+            return _memberService.GetAllMembers().OrderBy(m=>m.Name).Select(m =>
                 new MemberResetModel
                 {
                     Id = m.Key,
